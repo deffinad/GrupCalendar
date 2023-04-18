@@ -5,6 +5,8 @@ import { COLORS } from '../assets/color'
 import { Input } from '../components/input'
 import { Button } from '../components/button'
 import { KeyboardAvoidingView } from 'react-native'
+import { MyCheckbox } from '../components/checkBox'
+import ModalTnc from '../components/Modal'
 
 export const Login = ({ navigation }) => {
     const [dataLogin, setDataLogin] = useState({
@@ -42,7 +44,10 @@ export const Login = ({ navigation }) => {
                     password={true}
                     onChangeText={text => handleChangeInput('password', text)}
                 />
-
+                <View style={{ flexDirection: 'row', gap: '10', marginLeft: 10, alignItems: 'center' }}>
+                    <MyCheckbox />
+                    <ModalTnc />
+                </View>
                 <Button title={'Submit'} style={{ backgroundColor: COLORS.primary }} textColor={COLORS.white} onClick={() => navigation.navigate('Main')} />
             </View>
         </KeyboardAvoidingView>
