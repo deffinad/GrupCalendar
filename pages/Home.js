@@ -43,7 +43,12 @@ export const Home = () => {
                         todayTextColor: '#00adf5',
                         dayTextColor: '#2d4150',
                         textDisabledColor: 'gray'
-                    }} />
+                    }}
+                    markedDates={{
+                        '2023-04-23': { marked: true },
+                        '2023-04-18': { marked: true },
+                    }}
+                />
             </View>
 
             <View style={{ flex: 1 }}>
