@@ -8,7 +8,6 @@ import { TopTabs } from '../components/topTabs'
 export const Home = () => {
 
     return (
-
         <View style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, flexDirection: 'column', gap: 5 }}>
@@ -50,6 +49,7 @@ export const Home = () => {
                 <TopTabs />
             </View>
         </View>
+
     )
 }
 
