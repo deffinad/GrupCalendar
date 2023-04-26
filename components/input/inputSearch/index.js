@@ -1,37 +1,34 @@
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
-import { StyleSheet, TextInput } from 'react-native'
-import { View } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
+import { COLORS } from '../../../assets/color'
 
-const InputSearch = ({ onSearch }) => {
+export const InputSearch = ({ onSearch, placeholder }) => {
     return (
         <View style={styles.input}>
-            <Ionicons name='search' size={30} color={'#DA6317'} />
+            <Ionicons name='search' size={30} color={'grey'} />
             <TextInput
-                cursorColor={'#DA6317'}
-                placeholder='What do you want to order?'
-                placeholderTextColor={'#DA6317'}
+                cursorColor={COLORS.primary}
+                placeholder={placeholder}
                 style={{ fontSize: 16 }}
                 maxLength={30}
                 onChangeText={onSearch}
                 clearButtonMode='always'
             />
         </View>
+
+
     )
 }
 
 const styles = StyleSheet.create({
     input: {
-        flex: 1,
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         gap: 20,
         borderRadius: 15,
-        backgroundColor: '#f5d8c6',
+        backgroundColor: COLORS.input,
         paddingHorizontal: 20,
         paddingVertical: 15
     },
 })
-
-export default InputSearch

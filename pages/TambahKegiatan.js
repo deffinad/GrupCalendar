@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { COLORS } from '../assets/color';
 import { StatusBar } from 'expo-status-bar';
@@ -11,7 +11,7 @@ import { Button } from '../components/button';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useState } from 'react';
 
-export const Home = () => {
+export const TambahKegiatan = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
@@ -29,9 +29,10 @@ export const Home = () => {
                         <View style={{ flex: 1, alignItems: 'flex-start' }}>
                             <Ionicons name='chevron-back' size={25} onPress={() => navigation.goBack()} />
                         </View>
-                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                            <Ionicons name='ellipsis-horizontal' size={25} />
-                        </View>
+                    </View>
+
+                    <View style={{ marginVertical: 22 }}>
+                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}> Tambah Kegiatan</Text>
                     </View>
 
                     <Calendar
@@ -64,11 +65,15 @@ export const Home = () => {
                         setValue={setValue}
                         setItems={setItems}
                         placeholder='Select item'
+                        listMode='SCROLLVIEW'
+                        style={{ backgroundColor: COLORS.input, borderWidth: 0, borderRadius: 15, paddingHorizontal: 20 }}
+                        dropDownContainerStyle={{ backgroundColor: COLORS.white, borderWidth: 3, borderRadius: 15, borderColor: COLORS.input }}
+                        textStyle={{ color: 'grey' }}
                     />
 
                     <Input placeholder={'Label'} />
                     <Input placeholder={'Asign'} />
-                    <Button title={'Submit'} style={{ backgroundColor: COLORS.primary }} textColor={COLORS.white} />
+                    <Button title={'Submit'} style={{ backgroundColor: COLORS.primary, marginVertical: 24 }} textColor={COLORS.white} />
                 </View>
             </SafeAreaView>
         </ScrollView>
