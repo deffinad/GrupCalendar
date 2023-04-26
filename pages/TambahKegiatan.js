@@ -1,7 +1,7 @@
 import React from 'react'
 import React from 'react'
 import { View, Text } from 'react-native'
-import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import { COLORS } from '../assets/color';
 import { StatusBar } from 'expo-status-bar';
 import { Input } from '../components/input';

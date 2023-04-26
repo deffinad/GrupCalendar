@@ -1,32 +1,28 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../assets/color";
 
-const card = () => {
+const Card = ({ style, children, onPress }) => {
     return (
-        <View>
-            <View style={styles.card}>
-                <Text>Nama Kegiatan</Text>
-                <Ionicons name="chevron-forward-outline" size={30} color='black' />
-            </View>
-        </View>
+        <TouchableOpacity
+            onPress={onPress}
+            activeOpacity={1}
+            style={[styles.card, style]}
+        >
+            {children}
+        </TouchableOpacity>
     );
 }
 
-export default card
+export default Card
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: COLORS.white,
-        flexDirection: "column",
-        margin: 5,
-        height: 50,
+        padding: 16,
+        backgroundColor: '#fff',
         borderRadius: 22,
-        // borderWidth: 2,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingLeft: 20,
+        borderWidth: 2,
+        borderColor: 'whitesmoke'
     },
 });

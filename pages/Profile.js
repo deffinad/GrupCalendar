@@ -2,8 +2,8 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS } from '../assets/color';
-import Card from '../components/Card';
 import { Button } from '../components/button';
+import { CardNotification } from '../components/card/cardNotification';
 
 export const Profile = () => {
     return (
@@ -20,8 +20,9 @@ export const Profile = () => {
                 <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Last Notifications</Text>
             </View>
             <View style={{ marginTop: 20 }}>
-                <Card />
-                <Card />
+                <CardNotification />
+                <CardNotification />
+                <CardNotification />
             </View>
             <Button title={'Logout'} style={{ backgroundColor: COLORS.primary, marginTop: 20 }} textColor={COLORS.white} />
         </View>
@@ -31,8 +32,9 @@ export const Profile = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 100,
         paddingHorizontal: 33,
+        paddingTop: 33,
+        paddingBottom: 100,
         width: "100%",
         backgroundColor: COLORS.white,
     },

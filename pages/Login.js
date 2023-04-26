@@ -44,7 +44,7 @@ export const Login = ({ navigation }) => {
                     password={true}
                     onChangeText={text => handleChangeInput('password', text)}
                 />
-                <View style={{ flexDirection: 'row', gap: '10', marginLeft: 10, alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', gap: 10, marginLeft: 10, alignItems: 'center' }}>
                     <MyCheckbox />
                     <ModalTnc />
                 </View>
