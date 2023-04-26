@@ -8,8 +8,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../components/button';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { useState } from 'react';
 
 export const Home = () => {
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        { label: 'English', value: 'en' },
+        { label: 'Deutsch', value: 'de' },
+        { label: 'French', value: 'fr' },
+    ]);
     return (
         <ScrollView>
             <SafeAreaView>
@@ -46,6 +55,17 @@ export const Home = () => {
                     <Input placeholder={'Judul'} />
                     <Input placeholder={'Deskripsi'} multiline={true} />
                     <Input placeholder={'Prioritas'} />
+
+                    <DropDownPicker
+                        open={open}
+                        value={value}
+                        items={items}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems={setItems}
+                        placeholder='Select item'
+                    />
+
                     <Input placeholder={'Label'} />
                     <Input placeholder={'Asign'} />
                     <Button title={'Submit'} style={{ backgroundColor: COLORS.primary }} textColor={COLORS.white} />

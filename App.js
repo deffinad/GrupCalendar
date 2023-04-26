@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Main } from './pages/Main';
 import { Login } from './pages/Login';
 import * as SplashScreen from 'expo-splash-screen'
+import { CardBg } from './components/CardBg';
 
 const Stack = createNativeStackNavigator()
 
@@ -13,6 +14,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
         <Stack.Screen name='Login' component={Login} />
+        {/* <Stack.Screen name='CardBg' component={CardBg} /> */}
         <Stack.Screen name='Main' component={Main} />
       </Stack.Navigator>
     </NavigationContainer>
