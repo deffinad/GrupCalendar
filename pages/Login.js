@@ -6,8 +6,7 @@ import { Input } from '../components/input'
 import { Button } from '../components/button'
 import { KeyboardAvoidingView } from 'react-native'
 import { MyCheckbox } from '../components/checkBox'
-import ModalTnc from '../components/Modal'
-import { CardBg } from '../components/CardBg'
+import ModalTnc from '../components/modal'
 
 export const Login = ({ navigation }) => {
     const [dataLogin, setDataLogin] = useState({
@@ -47,7 +46,7 @@ export const Login = ({ navigation }) => {
                             password={true}
                             onChangeText={text => handleChangeInput('password', text)}
                         />
-                        <View style={{ flexDirection: 'row', gap: '10', marginTop: 10, alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
                             <MyCheckbox />
                             <ModalTnc />
                         </View>

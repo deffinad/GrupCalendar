@@ -5,7 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { ListKegiatan } from './../../pages/ListKegiatan'
 import { Profile } from './../../pages/Profile'
 import { COLORS } from '../../assets/color';
-import { TambahKegiatan } from '../../pages/TambahKegiatan';
+import { Home } from '../../pages/Home';
 
 const Tab = createBottomTabNavigator()
 
@@ -14,7 +14,7 @@ const TabArr = [
         route: 'Home',
         label: 'Home',
         icon: 'home',
-        component: TambahKegiatan,
+        component: Home,
     },
     {
         route: 'ListKegiatan',

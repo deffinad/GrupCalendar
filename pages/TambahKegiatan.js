@@ -1,5 +1,4 @@
 import React from 'react'
-import { Calendar } from 'react-native-calendars';
 import { View, Text, TouchableOpacity } from 'react-native'
 import { Calendar } from 'react-native-calendars';
 import { COLORS } from '../assets/color';
