@@ -11,7 +11,7 @@ import { Button } from '../components/button';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useState } from 'react';
 
-export const TambahKegiatan = () => {
+export const TambahKegiatan = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([

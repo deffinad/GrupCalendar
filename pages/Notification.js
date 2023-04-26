@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { COLORS } from '../assets/color';
 import { Ionicons } from '@expo/vector-icons';
 import { InputSearch } from '../components/input/inputSearch';
+import { CardNotification } from '../components/card/cardNotification';
 
-export default function Notification() {
+export const Notification = ({ navigation }) => {
     return (
-        <View styles={styles.container}>
+        <View style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'flex-start' }}>
                     <Ionicons name='chevron-back' size={25} onPress={() => navigation.goBack()} />
@@ -22,6 +23,11 @@ export default function Notification() {
                 />
             </View>
             <View style={{ marginTop: 20 }}>
+                <CardNotification />
+                <CardNotification />
+                <CardNotification />
+                <CardNotification />
+                <CardNotification />
             </View>
         </View>
     )
@@ -30,15 +36,8 @@ export default function Notification() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 100,
-        paddingHorizontal: 33,
+        padding: 33,
         width: "100%",
         backgroundColor: COLORS.white,
-    },
-    header: {
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        display: "flex",
-        flexDirection: "row",
-    },
+    }
 })

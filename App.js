@@ -4,6 +4,8 @@ import { Main } from './pages/Main';
 import { Login } from './pages/Login';
 import { DetailKegiatan } from './pages/DetailKegiatan';
 import * as SplashScreen from 'expo-splash-screen'
+import { TambahKegiatan } from './pages/TambahKegiatan';
+import { Notification } from './pages/Notification';
 
 const Stack = createNativeStackNavigator()
 
@@ -16,6 +18,8 @@ export default function App() {
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Main' component={Main} />
         <Stack.Screen name='DetailKegiatan' component={DetailKegiatan} />
+        <Stack.Screen name='TambahKegiatan' component={TambahKegiatan} />
+        <Stack.Screen name='Notification' component={Notification} />
       </Stack.Navigator>
     </NavigationContainer>
   );

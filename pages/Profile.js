@@ -4,13 +4,16 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS } from '../assets/color';
 import { Button } from '../components/button';
 import { CardNotification } from '../components/card/cardNotification';
+import { Pressable } from 'react-native';
 
-export const Profile = () => {
+export const Profile = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={{ fontWeight: 'bold', fontSize: 24 }}> Profile</Text>
-                <Ionicons name="notifications-outline" size={30} color='black' />
+                <Pressable onPress={() => navigation.navigate('Notification')}>
+                    <Ionicons name="notifications-outline" size={30} color='black' />
+                </Pressable>
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 50 }}>
                 <Ionicons name="person-circle-outline" size={200} color='black' />

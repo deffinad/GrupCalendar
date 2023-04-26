@@ -7,6 +7,8 @@ import { Button } from '../components/button'
 import { KeyboardAvoidingView } from 'react-native'
 import { MyCheckbox } from '../components/checkBox'
 import ModalTnc from '../components/modal'
+import { Dimensions } from 'react-native'
+
 
 export const Login = ({ navigation }) => {
     const [dataLogin, setDataLogin] = useState({
@@ -22,7 +24,7 @@ export const Login = ({ navigation }) => {
     };
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, padding: 33, justifyContent: 'center', backgroundColor: COLORS.white }}>
+        <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', backgroundColor: COLORS.white }}>
 
             <View style={styles.container}>
 
@@ -32,7 +34,7 @@ export const Login = ({ navigation }) => {
                 </View>
 
                 <View style={styles.card}>
-                    <View style={{ flexDirection: 'column', gap: 18, marginTop: 50, width: 350 }}>
+                    <View style={{ flexDirection: 'column', gap: 18, paddingHorizontal: 33, paddingVertical: 70, width: '100%' }}>
                         <Input
                             placeholder={'Username / email'}
                             value={dataLogin.username}
@@ -50,13 +52,16 @@ export const Login = ({ navigation }) => {
                             <MyCheckbox />
                             <ModalTnc />
                         </View>
-                        <Button title={'Sign in'} style={{ backgroundColor: COLORS.white, width: 200, left: 80, marginTop: 10 }} textColor={COLORS.primary} onClick={() => navigation.navigate('Main')} />
+
+                        <View style={{ alignItems: 'center' }}>
+                            <Button title={'Sign in'} style={{ backgroundColor: COLORS.white, marginTop: 10, width: 200 }} textColor={COLORS.primary} onClick={() => navigation.navigate('Main')} />
+                        </View>
 
                         <View style={{ alignItems: 'center', marginTop: 10, }}>
                             <Text style={{ color: COLORS.white }}>Forgot Password?</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', left: 80 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             <Text>Don't have account?</Text>
                             <Text style={{ color: COLORS.white }}>Register</Text>
                         </View>
@@ -79,12 +84,11 @@ const styles = StyleSheet.create({
         display: "flex",
     },
     card: {
-        borderRadius: 32,
+        flex: 1,
+        borderTopLeftRadius: 32,
+        borderTopRightRadius: 32,
         marginTop: 30,
-        width: 390,
-        height: 600,
         alignItems: 'center',
-        right: 33,
         backgroundColor: COLORS.primary
     },
 })
