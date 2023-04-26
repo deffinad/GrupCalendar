@@ -2,10 +2,10 @@ import React from 'react'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, TouchableOpacity, View } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Home } from './../../pages/Home'
 import { ListKegiatan } from './../../pages/ListKegiatan'
 import { Profile } from './../../pages/Profile'
 import { COLORS } from '../../assets/color';
+import { TambahKegiatan } from '../../pages/TambahKegiatan';
 
 const Tab = createBottomTabNavigator()
 
@@ -14,7 +14,7 @@ const TabArr = [
         route: 'Home',
         label: 'Home',
         icon: 'home',
-        component: Home,
+        component: TambahKegiatan,
     },
     {
         route: 'ListKegiatan',

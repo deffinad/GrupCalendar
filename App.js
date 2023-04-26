@@ -4,6 +4,7 @@ import { Main } from './pages/Main';
 import { Login } from './pages/Login';
 import { DetailKegiatan } from './pages/DetailKegiatan';
 import * as SplashScreen from 'expo-splash-screen'
+import { CardBg } from './components/CardBg';
 
 const Stack = createNativeStackNavigator()
 

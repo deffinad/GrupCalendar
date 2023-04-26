@@ -31,4 +31,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 15
     },
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> 735c13f7f4fb91b6e1699fbf12809dc2c9c92eb9

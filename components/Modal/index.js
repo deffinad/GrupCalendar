@@ -35,7 +35,7 @@ export default function ModalTnc() {
                 </View>
             </Modal>
             <Pressable onPress={() => setmodalVisible(true)}>
-                <Text>I agree with the terms and condition</Text>
+                <Text style={{ color: COLORS.white }}>I agree with the terms and condition</Text>
             </Pressable>
         </View>
     )

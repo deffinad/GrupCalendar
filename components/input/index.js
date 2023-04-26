@@ -19,6 +19,7 @@ export const Input = ({ placeholder, value, name, onChangeText, numeric, multili
                 placeholder={placeholder}
                 value={value}
                 id={name}
+                placeholderTextColor={'grey'}
                 secureTextEntry={password ? true : false}
                 keyboardType={numeric ? 'numeric' : 'default'}
                 onChangeText={onChangeText}

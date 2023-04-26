@@ -5,6 +5,7 @@ import { InputSearch } from '../components/input/inputSearch'
 import { CardKegiatan } from '../components/card/cardKegiatan'
 import { useNavigation } from '@react-navigation/native'
 
+
 export const ListKegiatan = () => {
     const navigation = useNavigation()
     return (
