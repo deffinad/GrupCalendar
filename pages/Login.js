@@ -8,6 +8,7 @@ import { KeyboardAvoidingView } from 'react-native'
 import { MyCheckbox } from '../components/checkBox'
 import ModalTnc from '../components/modal'
 import { Dimensions } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 export const Login = ({ navigation }) => {
@@ -26,7 +27,7 @@ export const Login = ({ navigation }) => {
     return (
         <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', backgroundColor: COLORS.white }}>
 
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
 
                 <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.white} />
                 <View style={styles.logo}>
@@ -67,7 +68,7 @@ export const Login = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-            </View>
+            </SafeAreaView>
         </KeyboardAvoidingView>
     )
 }

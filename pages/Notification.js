@@ -4,10 +4,11 @@ import { COLORS } from '../assets/color';
 import { Ionicons } from '@expo/vector-icons';
 import { InputSearch } from '../components/input/inputSearch';
 import { CardNotification } from '../components/card/cardNotification';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const Notification = ({ navigation }) => {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'flex-start' }}>
                     <Ionicons name='chevron-back' size={25} onPress={() => navigation.goBack()} />
@@ -29,7 +30,7 @@ export const Notification = ({ navigation }) => {
                 <CardNotification />
                 <CardNotification />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 

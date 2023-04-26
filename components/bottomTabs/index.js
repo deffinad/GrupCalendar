@@ -6,6 +6,7 @@ import { ListKegiatan } from './../../pages/ListKegiatan'
 import { Profile } from './../../pages/Profile'
 import { COLORS } from '../../assets/color';
 import { Home } from '../../pages/Home';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator()
 
@@ -32,33 +33,42 @@ const TabArr = [
 
 export const BottomTabs = () => {
     return (
-        <Tab.Navigator
-            screenOptions={{
-                tabBarHideOnKeyboard: true,
-                headerShown: false,
-                tabBarStyle: {
-                    height: 74,
-                    position: 'absolute',
-                    bottom: 10,
-                    right: 10,
-                    left: 10,
-                    borderRadius: 22
-                },
-            }}>
-            {TabArr.map((item, index) => {
-                return (
-                    <Tab.Screen
-                        key={index}
-                        name={item.route}
-                        component={item.component}
-                        options={{
-                            tabBarLabel: item.label,
-                            tabBarButton: props => <TabButton {...props} item={item} />,
-                        }}
-                    />
-                );
-            })}
-        </Tab.Navigator>
+        <SafeAreaProvider>
+            <Tab.Navigator
+                screenOptions={{
+                    tabBarHideOnKeyboard: true,
+                    headerShown: false,
+                    tabBarStyle: {
+                        height: 74,
+                        position: 'absolute',
+                        bottom: 30,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        right: 10,
+                        left: 10,
+                        borderRadius: 22,
+                        shadowColor: '#000000',
+                        shadowOffset: { width: 0, height: 5 },
+                        shadowRadius: 5,
+                        shadowOpacity: 0.2,
+                        elevation: 3
+                    },
+                }}>
+                {TabArr.map((item, index) => {
+                    return (
+                        <Tab.Screen
+                            key={index}
+                            name={item.route}
+                            component={item.component}
+                            options={{
+                                tabBarLabel: item.label,
+                                tabBarButton: props => <TabButton {...props} item={item} />,
+                            }}
+                        />
+                    );
+                })}
+            </Tab.Navigator>
+        </SafeAreaProvider>
     )
 }
 
@@ -68,7 +78,7 @@ const TabButton = props => {
 
     return (
         <TouchableOpacity
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+            style={{ flex: 1, height: 74, backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center' }}
             activeOpacity={1}
             onPress={onPress}>
             <View
@@ -76,7 +86,6 @@ const TabButton = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'row',
-                    zIndex: 1,
                     gap: 8,
                     borderRadius: 20,
                     backgroundColor: focused ? COLORS.secondary : 'transparent',

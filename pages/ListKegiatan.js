@@ -4,12 +4,13 @@ import { COLORS } from './../assets/color/index'
 import { InputSearch } from '../components/input/inputSearch'
 import { CardKegiatan } from '../components/card/cardKegiatan'
 import { useNavigation } from '@react-navigation/native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 export const ListKegiatan = () => {
     const navigation = useNavigation()
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'column', gap: 5 }}>
                 <Text style={styles.textHeader}>List Kegiatan</Text>
             </View>
@@ -21,7 +22,7 @@ export const ListKegiatan = () => {
             <View>
                 <CardKegiatan onPress={() => navigation.navigate('DetailKegiatan')} />
             </View>
-        </View >
+        </SafeAreaView>
     )
 }
 

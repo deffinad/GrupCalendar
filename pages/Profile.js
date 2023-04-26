@@ -5,10 +5,11 @@ import { COLORS } from '../assets/color';
 import { Button } from '../components/button';
 import { CardNotification } from '../components/card/cardNotification';
 import { Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const Profile = ({ navigation }) => {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <Text style={{ fontWeight: 'bold', fontSize: 24 }}> Profile</Text>
                 <Pressable onPress={() => navigation.navigate('Notification')}>
@@ -28,7 +29,7 @@ export const Profile = ({ navigation }) => {
                 <CardNotification />
             </View>
             <Button title={'Logout'} style={{ backgroundColor: COLORS.primary, marginTop: 20 }} textColor={COLORS.white} />
-        </View>
+        </SafeAreaView>
     )
 }
 
