@@ -8,29 +8,34 @@ import { CardKegiatan } from '../components/card/cardKegiatan'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar'
+import { Image } from 'react-native'
+import { color } from 'react-native-reanimated'
 
 export const Home = ({ navigation }) => {
 
     return (
         <ScrollView>
             <SafeAreaView style={styles.container}>
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={{ flex: 1, flexDirection: 'column', gap: 5 }}>
-                        <Text style={styles.textHeader}>Selamat Datang</Text>
-                        <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-                            <View style={{ width: 30, height: 30, backgroundColor: COLORS.primary, borderRadius: 100 }}></View>
+                <Image
+                    source={require('../assets/header.png')}
+                    style={{ height: 203, position: 'absolute', top: 0, left: 0, right: 0, width: "100%" }}
+                    resizeMode='stretch'
+                />
+
+                <View style={{
+                    paddingHorizontal: 33, flex: 1, gap: 33, paddingTop: 33, paddingBottom: 100
+                }}>
+                    <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', gap: 20, flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'column', gap: 5 }}>
+                            <Text style={styles.textHeader}>Welcome,</Text>
                             <Text style={styles.textHeaderDesc}>Deffin Achmaddifa</Text>
+                        </View>
+
+                        <View>
+                            <View style={{ width: 40, height: 40, backgroundColor: COLORS.primary, borderRadius: 100 }} />
                         </View>
                     </View>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Pressable style={{ borderRadius: 100, width: 40, height: 40, backgroundColor: COLORS.white, elevation: 3, justifyContent: 'center', alignItems: 'center' }} onPress={() => navigation.navigate('TambahKegiatan')}>
-                            <Ionicons name='add' size={24} color={COLORS.primary} />
-                        </Pressable>
-                    </View>
-                </View>
-
-                <View>
                     <Calendar
                         style={{
                             borderWidth: 2,
@@ -44,17 +49,15 @@ export const Home = ({ navigation }) => {
                             textSectionTitleColor: '#b6c1cd',
                             selectedDayBackgroundColor: '#00adf5',
                             selectedDayTextColor: '#ffffff',
-                            todayTextColor: '#00adf5',
+                            todayTextColor: COLORS.white,
+                            todayBackgroundColor: COLORS.primary,
                             dayTextColor: '#2d4150',
                             textDisabledColor: 'gray'
                         }} />
+                    <CardKegiatan />
                 </View>
-
-                <View style={{ height: 500 }}>
-                    <TopTabs />
-                </View>
-            </SafeAreaView>
-        </ScrollView>
+            </SafeAreaView >
+        </ScrollView >
 
     )
 }
@@ -62,17 +65,15 @@ export const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 33,
-        paddingTop: 33,
-        paddingBottom: 100,
-        gap: 33,
-        backgroundColor: COLORS.white
     },
     textHeader: {
-        fontSize: 24,
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontWeight: '700',
+        color: COLORS.white
     },
     textHeaderDesc: {
-        fontSize: 16
+        fontSize: 18,
+        fontWeight: 700,
+        color: COLORS.white
     }
 })
