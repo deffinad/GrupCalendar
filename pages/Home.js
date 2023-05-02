@@ -56,9 +56,9 @@ export const Home = ({ navigation }) => {
                         }} />
                     <CardKegiatan />
                 </View>
-            </SafeAreaView >
-        </ScrollView >
 
+            </SafeAreaView>
+        </ScrollView>
     )
 }
 
