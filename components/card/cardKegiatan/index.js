@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from '..'
 import { StyleSheet, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-export const CardKegiatan = ({ onPress }) => {
+export const CardKegiatan = ({ name, description, date, onPress, style }) => {
+
     return (
-        <Card style={{ flexDirection: 'row' }} onPress={onPress}>
+        <Card style={[{ flexDirection: 'row' }, style]} onPress={onPress}>
             <View style={{ flex: 1, alignContent: 'center' }}>
-                <Text style={styles.nama}>Nama Kegiatan</Text>
-                <Text style={styles.deskripsi}>Deskripsi Kegiatan</Text>
-                <Text style={styles.tanggal}>Tanggal Kegiatan</Text>
+                <Text style={styles.nama}>{name}</Text>
+                <Text numberOfLines={2} style={styles.deskripsi}>{description}</Text>
+                <Text style={styles.tanggal}>{date}</Text>
             </View>
 
             <View style={{ alignContent: 'flex-start', alignItems: 'flex-start' }}>
@@ -21,14 +22,16 @@ export const CardKegiatan = ({ onPress }) => {
 
 const styles = StyleSheet.create({
     nama: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '600'
     },
     deskripsi: {
-        color: 'grey'
+        color: 'grey',
+        fontSize: 15,
+        marginTop: 5
     },
     tanggal: {
-        fontSize: 18,
+        fontSize: 14,
         color: 'grey',
         marginTop: 10
     }

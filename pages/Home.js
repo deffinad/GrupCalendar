@@ -1,16 +1,42 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import { COLORS } from '../assets/color'
 import { Ionicons } from '@expo/vector-icons'
 import { Calendar } from 'react-native-calendars'
 import { TopTabs } from '../components/topTabs'
-import { CardKegiatan } from '../components/card/cardKegiatan'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar'
+import { getAllActivity } from '../services/api'
 
 export const Home = ({ navigation }) => {
+    const [markDate, setMarkDate] = useState({})
+    useEffect(() => {
+        getAllActivity()
+            .then(result => {
+                result.data.map(item => {
+                    setMarkDate(prevData => (
+                        {
+                            ...prevData,
+                            [item.date]: {
+                                marked: true,
+                                type: 'multi-dot',
+                                dots: [
+                                    { color: 'red' },
+                                    { color: 'blue' }
+                                ]
+                            }
+                        }
+                    ))
+                })
+            }).catch(error => {
+                console.log(error)
+            })
+    }, [])
 
+    const handle = () => {
+        console.log(markDate)
+    }
     return (
         <ScrollView>
             <SafeAreaView style={styles.container}>
@@ -32,6 +58,9 @@ export const Home = ({ navigation }) => {
 
                 <View>
                     <Calendar
+                        onDayPress={handle}
+                        markedDates={markDate}
+                        markingType='multi-dot'
                         style={{
                             borderWidth: 2,
                             borderColor: 'whitesmoke',
@@ -42,15 +71,17 @@ export const Home = ({ navigation }) => {
                             backgroundColor: COLORS.white,
                             calendarBackground: COLORS.white,
                             textSectionTitleColor: '#b6c1cd',
-                            selectedDayBackgroundColor: '#00adf5',
-                            selectedDayTextColor: '#ffffff',
-                            todayTextColor: '#00adf5',
+                            selectedDayBackgroundColor: '#re',
+                            todayTextColor: COLORS.white,
+                            todayBackgroundColor: COLORS.primary,
                             dayTextColor: '#2d4150',
-                            textDisabledColor: 'gray'
+                            textDisabledColor: 'gray',
+                            arrowColor: COLORS.primary
                         }} />
+
                 </View>
 
-                <View style={{ height: 500 }}>
+                <View style={{ height: 600 }}>
                     <TopTabs />
                 </View>
             </SafeAreaView>
