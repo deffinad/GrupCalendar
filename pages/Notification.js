@@ -1,12 +1,31 @@
-import React from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import { COLORS } from '../assets/color';
 import { Ionicons } from '@expo/vector-icons';
 import { InputSearch } from '../components/input/inputSearch';
 import { CardNotification } from '../components/card/cardNotification';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { profile } from '../services/api';
+import { useNavigation } from '@react-navigation/native';
 
-export const Notification = ({ navigation }) => {
+
+export const Notification = () => {
+    const navigation = useNavigation()
+    const [data, setData] = useState({
+        id: '',
+        nama: '',
+        namaKegiatan: []
+    })
+
+    useEffect(() => {
+        profile()
+            .then(result => {
+                setData(result.data[0].namaKegiatan)
+            })
+            .catch(error => {
+                alert(error)
+            })
+    }, []);
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
@@ -24,11 +43,13 @@ export const Notification = ({ navigation }) => {
                 />
             </View>
             <View style={{ marginTop: 20 }}>
-                <CardNotification />
-                <CardNotification />
-                <CardNotification />
-                <CardNotification />
-                <CardNotification />
+                <FlatList
+                    data={data}
+                    renderItem={({ item, index }) => (
+                        <CardNotification title={item.title} id={index} />
+                    )}
+                    keyExtractor={(item) => item.id}
+                />
             </View>
         </SafeAreaView>
     )
