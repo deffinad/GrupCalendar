@@ -7,7 +7,6 @@ import { Profile } from './../../pages/Profile'
 import { COLORS } from '../../assets/color';
 import { Home } from '../../pages/Home';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { TambahKegiatan } from '../../pages/TambahKegiatan';
 
 const Tab = createBottomTabNavigator()
 
@@ -15,31 +14,19 @@ const TabArr = [
     {
         route: 'Home',
         label: 'Home',
-        icon: 'calendar-outline',
+        icon: 'home',
         component: Home,
     },
     {
         route: 'ListKegiatan',
         label: 'Kegiatan',
-        icon: 'book-outline',
+        icon: 'clipboard',
         component: ListKegiatan,
-    },
-    {
-        route: 'TambahKegiatan',
-        label: 'Tambah Kegiatan',
-        icon: 'add-outline',
-        component: TambahKegiatan,
-    },
-    {
-        route: 'Notifications',
-        label: 'Notifications',
-        icon: 'notifications-outline',
-        component: Profile,
     },
     {
         route: 'Profile',
         label: 'Profile',
-        icon: 'person-outline',
+        icon: 'person',
         component: Profile,
     }
 ];
@@ -52,12 +39,19 @@ export const BottomTabs = () => {
                     tabBarHideOnKeyboard: true,
                     headerShown: false,
                     tabBarStyle: {
-                        height: 72,
+                        height: 74,
                         position: 'absolute',
+                        bottom: 30,
                         justifyContent: 'center',
                         alignItems: 'center',
+                        right: 10,
+                        left: 10,
                         borderRadius: 22,
-                        backgroundColor: COLORS.secondary
+                        shadowColor: '#000000',
+                        shadowOffset: { width: 0, height: 5 },
+                        shadowRadius: 5,
+                        shadowOpacity: 0.2,
+                        elevation: 3
                     },
                 }}>
                 {TabArr.map((item, index) => {
@@ -68,7 +62,7 @@ export const BottomTabs = () => {
                             component={item.component}
                             options={{
                                 tabBarLabel: item.label,
-                                tabBarButton: props => <TabButton {...props} item={item} index={index} />,
+                                tabBarButton: props => <TabButton {...props} item={item} />,
                             }}
                         />
                     );
@@ -81,51 +75,35 @@ export const BottomTabs = () => {
 const TabButton = props => {
     const { item, onPress, accessibilityState } = props;
     const focused = accessibilityState.selected;
-    var middle = Math.round((TabArr.length - 1) / 2)
 
     return (
-        props.index !== middle ? (
-            <TouchableOpacity
-                style={{ flex: 1, height: 72, backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center' }}
-                activeOpacity={1}
-                onPress={onPress}>
-                <View
-                    style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        gap: 8,
-                        borderRadius: 20,
-                        backgroundColor: focused ? COLORS.secondary : 'transparent',
-                        padding: 10,
-                    }}>
+        <TouchableOpacity
+            style={{ flex: 1, height: 74, backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center' }}
+            activeOpacity={1}
+            onPress={onPress}>
+            <View
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    gap: 8,
+                    borderRadius: 20,
+                    backgroundColor: focused ? COLORS.secondary : 'transparent',
+                    padding: 10,
+                }}>
 
-                    <Ionicons name={item.icon} size={25} color={focused ? COLORS.primary : "#8F9BB3"} />
-                </View>
-            </TouchableOpacity>
-        ) : (
-            <TouchableOpacity
-                style={{ flex: 1, height: 72, justifyContent: 'center', alignItems: 'center', top: -30 }}
-                activeOpacity={1}
-                onPress={onPress}>
-                <View
-                    style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        gap: 8,
-                        borderRadius: 100,
-                        backgroundColor: COLORS.primary,
-                        borderWidth: 10,
-                        borderColor: COLORS.white,
-                        width: 100,
-                        height: 100
-                    }}>
+                <Ionicons name={focused ? item.icon : item.icon + '-outline'} size={25} color={focused ? COLORS.primary : COLORS.primary} />
 
-                    <Ionicons name={item.icon} size={40} color={COLORS.white} />
-                </View>
-            </TouchableOpacity>
-
-        )
+                {focused ? (
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            fontWeight: '700',
+                        }}>
+                        {item.label}
+                    </Text>
+                ) : null}
+            </View>
+        </TouchableOpacity>
     );
 };
