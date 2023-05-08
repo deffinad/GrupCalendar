@@ -7,22 +7,48 @@ import { Button } from '../components/button'
 import { KeyboardAvoidingView } from 'react-native'
 import { MyCheckbox } from '../components/checkBox'
 import ModalTnc from '../components/modal'
-import { Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { login } from '../services/api'
 
 
 export const Login = ({ navigation }) => {
-    const [dataLogin, setDataLogin] = useState({
-        username: '',
-        password: ''
-    })
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleChangeInput = (name, value) => {
-        setDataLogin({
-            ...dataLogin,
-            [name]: value,
-        });
+    const [isLoading, setIsLoading] = useState(false);
+
+    const onChangeUsernameHandler = (username) => {
+        setUsername(username);
     };
+    const onChangePasswordHandler = (password) => {
+        setPassword(password);
+    };
+
+    const onSubmitFormHandler = async () => {
+        if (!username.trim() || !password.trim()) {
+            alert("invalid");
+        } else {
+
+            setIsLoading(false);
+            const data = {
+                "username": username,
+                "password": password,
+            }
+            login(data)
+                .then(result => {
+                    if (result.data.status === 200) {
+                        navigation.navigate('Main')
+                    } else {
+                        alert("Username atau Password Salah")
+                    }
+                    console.log(result.data)
+                })
+                .catch(error => {
+                    alert(error)
+                    console.log(error)
+                })
+        }
+    }
 
     return (
         <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', backgroundColor: COLORS.white }}>
@@ -38,16 +64,16 @@ export const Login = ({ navigation }) => {
                     <View style={{ flexDirection: 'column', gap: 18, paddingHorizontal: 33, paddingVertical: 70, width: '100%' }}>
                         <Input
                             placeholder={'Username / email'}
-                            value={dataLogin.username}
-                            name={'username'}
-                            onChangeText={text => handleChangeInput('username', text)}
+                            value={username}
+                            editable={!isLoading}
+                            onChangeText={onChangeUsernameHandler}
                         />
                         <Input
                             placeholder={'Password'}
-                            value={dataLogin.password}
-                            name={'password'}
+                            value={password}
+                            editable={!isLoading}
                             password={true}
-                            onChangeText={text => handleChangeInput('password', text)}
+                            onChangeText={onChangePasswordHandler}
                         />
                         <View style={{ flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
                             <MyCheckbox />
@@ -55,7 +81,7 @@ export const Login = ({ navigation }) => {
                         </View>
 
                         <View style={{ alignItems: 'center' }}>
-                            <Button title={'Sign in'} style={{ backgroundColor: COLORS.white, marginTop: 10, width: 200 }} textColor={COLORS.primary} onClick={() => navigation.navigate('Main')} />
+                            <Button title={'Sign in'} style={{ backgroundColor: COLORS.white, marginTop: 10, width: 200 }} textColor={COLORS.primary} onClick={onSubmitFormHandler} />
                         </View>
 
                         <View style={{ alignItems: 'center', marginTop: 10, }}>

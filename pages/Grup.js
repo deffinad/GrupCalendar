@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { InputSearch } from '../components/input/inputSearch'
 import { CardKegiatan } from '../components/card/cardKegiatan'
 import { COLORS } from '../assets/color'

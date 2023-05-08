@@ -1,13 +1,11 @@
-import React, { useRef, useState } from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, Pressable, Button } from 'react-native'
 import { COLORS } from '../assets/color'
 import { Ionicons } from '@expo/vector-icons'
 import { Calendar } from 'react-native-calendars'
 import { TopTabs } from '../components/topTabs'
-import { CardKegiatan } from '../components/card/cardKegiatan'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
-import { StatusBar } from 'expo-status-bar'
 
 export const Home = ({ navigation }) => {
 
@@ -54,7 +52,7 @@ export const Home = ({ navigation }) => {
                     <TopTabs />
                 </View>
             </SafeAreaView>
-        </ScrollView>
+        </ScrollView >
 
     )
 }
@@ -74,5 +72,12 @@ const styles = StyleSheet.create({
     },
     textHeaderDesc: {
         fontSize: 16
-    }
+    },
+    card: {
+        backgroundColor: "#fff",
+        height: 600,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 32
+    },
 })
