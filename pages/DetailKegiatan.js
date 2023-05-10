@@ -27,7 +27,7 @@ export const DetailKegiatan = ({ navigation, route }) => {
             .catch(error => {
                 console.log(error)
             })
-    }, [activity_id])
+    })
     return (
         <ScrollView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <SafeAreaView style={styles.container}>
@@ -84,7 +84,7 @@ export const DetailKegiatan = ({ navigation, route }) => {
                                 <View style={{ gap: 10, marginTop: 10 }}>
                                     {data.assign.map((item, index) => (
                                         <View key={index} style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-                                            <View style={{ width: 30, height: 30, backgroundColor: COLORS.primary, borderRadius: 100 }}></View>
+                                            <Ionicons name='person-circle-outline' size={30} />
                                             <Text style={styles.textHeaderDesc}>{item}</Text>
                                         </View>
                                     ))}

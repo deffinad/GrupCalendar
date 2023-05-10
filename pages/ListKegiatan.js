@@ -6,6 +6,7 @@ import { CardKegiatan } from '../components/card/cardKegiatan'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { getAllActivity } from '../services/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 export const ListKegiatan = () => {
@@ -14,15 +15,29 @@ export const ListKegiatan = () => {
     const [dataFilter, setFilterData] = useState([]);
 
     useEffect(() => {
-        getAllActivity()
-            .then(result => {
-                setData(result.data)
+        retrieveData()
+            .then(user => {
+                getAllActivity(user.id)
+                    .then(result => {
+                        setData(result.data)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             })
-            .catch(err => {
-                console.log(err)
+            .catch(error => {
+                console.log(error)
             })
-
     })
+
+    const retrieveData = async () => {
+        try {
+            const user = await AsyncStorage.getItem('ACCESS_TOKEN')
+            return JSON.parse(user)
+        } catch (error) {
+            return error
+        }
+    }
 
     const filterData = search => {
         const filter = data.length !== 0 && data.filter(item => {
@@ -44,6 +59,8 @@ export const ListKegiatan = () => {
 
             <View>
                 <FlatList
+                    scrollEnabled={true}
+                    style={{ marginBottom: 140 }}
                     data={dataFilter && dataFilter.length > 0 ? dataFilter : data}
                     renderItem={({ item }) => <CardKegiatan name={item.name} description={item.description} date={item.date} style={{ marginTop: 10 }} onPress={() => navigation.navigate('DetailKegiatan', { activity_id: item.activity_id })} />}
                     keyExtractor={item => item.activity_id}

@@ -10,7 +10,7 @@ export const InputSearch = ({ onSearch, placeholder }) => {
             <TextInput
                 cursorColor={COLORS.primary}
                 placeholder={placeholder}
-                style={{ fontSize: 16 }}
+                style={{ fontSize: 16, flex: 1 }}
                 maxLength={30}
                 onChangeText={onSearch}
                 clearButtonMode='always'

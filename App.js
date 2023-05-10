@@ -14,7 +14,7 @@ export default function App() {
   setTimeout(SplashScreen.hideAsync, 2000)
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Main' screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Main' component={Main} />
         <Stack.Screen name='DetailKegiatan' component={DetailKegiatan} />

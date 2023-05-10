@@ -5,27 +5,47 @@ import { Ionicons } from '@expo/vector-icons';
 import { InputSearch } from '../components/input/inputSearch';
 import { CardNotification } from '../components/card/cardNotification';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { profile } from '../services/api';
+import { getNotifications, profile } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const Notification = () => {
     const navigation = useNavigation()
-    const [data, setData] = useState({
-        id: '',
-        nama: '',
-        namaKegiatan: []
-    })
+    const [data, setData] = useState([])
+    const [dataFilter, setFilterData] = useState([]);
 
     useEffect(() => {
-        profile()
-            .then(result => {
-                setData(result.data[0].namaKegiatan)
-            })
-            .catch(error => {
-                alert(error)
+        retrieveData()
+            .then(user => {
+                getNotifications(user.id)
+                    .then(result => {
+                        setData(result.data)
+                    })
+                    .catch(error => {
+                        alert(error)
+                    })
+            }).catch(err => {
+                console.log(err)
             })
     }, []);
+
+    const retrieveData = async () => {
+        try {
+            const user = await AsyncStorage.getItem('ACCESS_TOKEN')
+            return JSON.parse(user)
+        } catch (error) {
+            return error
+        }
+    }
+
+    const filterData = search => {
+        const filter = data.length !== 0 && data.filter(item => {
+            return item.title.toLowerCase().includes(search.toLowerCase());
+        });
+
+        setFilterData(filter);
+    };
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
@@ -40,13 +60,14 @@ export const Notification = () => {
             <View style={{ marginTop: 30 }}>
                 <InputSearch
                     placeholder={'Search'}
+                    onSearch={filterData}
                 />
             </View>
             <View style={{ marginTop: 20 }}>
                 <FlatList
-                    data={data}
+                    data={dataFilter && dataFilter.length > 0 ? dataFilter : data}
                     renderItem={({ item, index }) => (
-                        <CardNotification title={item.title} id={index} />
+                        <CardNotification title={item.title} id={index} handleClick={() => navigation.navigate('DetailKegiatan', { activity_id: item.activities_id })} />
                     )}
                     keyExtractor={(item) => item.id}
                 />

@@ -9,44 +9,61 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar'
 import { getAllActivity } from '../services/api'
 import { Image } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Home = ({ navigation }) => {
     const [markDate, setMarkDate] = useState({})
+    const [user, setUser] = useState({})
+
     useEffect(() => {
-        getAllActivity()
-            .then(result => {
-                result.data.map(item => {
-                    setMarkDate(prevData => (
-                        {
-                            ...prevData,
-                            [item.date]: {
-                                marked: true,
-                                type: 'multi-dot',
-                                dots: [
-                                    { color: 'red' },
-                                    { color: 'blue' }
-                                ]
-                            }
-                        }
-                    ))
-                })
-            }).catch(error => {
+        retrieveData()
+            .then(user => {
+                setUser(user)
+                getAllActivity(user.id)
+                    .then(result => {
+                        result.data.map(item => {
+                            setMarkDate(prevData => (
+                                {
+                                    ...prevData,
+                                    [item.date]: {
+                                        marked: true,
+                                        type: 'multi-dot',
+                                        dots: [
+                                            { color: 'red' },
+                                            { color: 'blue' }
+                                        ]
+                                    }
+                                }
+                            ))
+                        })
+                    }).catch(error => {
+                        console.log(error)
+                    })
+            })
+            .catch(error => {
                 console.log(error)
             })
+
     }, [])
 
-    const handle = () => {
-        console.log(markDate)
+    const retrieveData = async () => {
+        try {
+            const user = await AsyncStorage.getItem('ACCESS_TOKEN')
+            return JSON.parse(user)
+        } catch (error) {
+            return error
+        }
     }
+
     return (
-        <ScrollView>
+        <ScrollView style={{ flexGrow: 1 }} nestedScrollEnabled={true}>
             <SafeAreaView style={styles.container}>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1, flexDirection: 'column', gap: 5 }}>
                         <Text style={styles.textHeader}>Selamat Datang</Text>
                         <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-                            <View style={{ width: 30, height: 30, backgroundColor: COLORS.primary, borderRadius: 100 }}></View>
-                            <Text style={styles.textHeaderDesc}>Deffin Achmaddifa</Text>
+                            <Ionicons name='person-circle-outline' size={30} />
+                            <Text style={styles.textHeaderDesc}>{user.name}</Text>
                         </View>
                     </View>
 
@@ -59,7 +76,6 @@ export const Home = ({ navigation }) => {
 
                 <View>
                     <Calendar
-                        onDayPress={handle}
                         markedDates={markDate}
                         markingType='multi-dot'
                         style={{
@@ -82,7 +98,7 @@ export const Home = ({ navigation }) => {
                         }} />
                 </View>
 
-                <View style={{ height: 500 }}>
+                <View style={{ height: 700 }}>
                     <TopTabs />
                 </View>
             </SafeAreaView>

@@ -3,12 +3,11 @@ import { Pressable, StyleSheet, Text, View, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../assets/color';
 
-export const MyCheckbox = ({ onClick }) => {
-    const [checked, setChecked] = useState(false);
+export const MyCheckbox = ({ onClick, checked }) => {
     return (
         <Pressable
             style={[styles.checkboxBase, checked && styles.checkboxChecked]}
-            onPress={() => setChecked(!checked)}>
+            onPress={onClick}>
             {checked && <Ionicons name="checkmark" size={24} color="white" />}
         </Pressable>
     );

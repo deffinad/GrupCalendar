@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { Calendar } from 'react-native-calendars';
 import { COLORS } from '../assets/color';
@@ -10,13 +10,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../components/button';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useState } from 'react';
-import { addActivity } from '../services/api';
-
-
+import { addActivity, getEmployeeForAsign } from '../services/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 export const TambahKegiatan = ({ navigation }) => {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    const [openPriotas, setOpenPrioritas] = useState(false);
+    const [openAsign, setOpenAsign] = useState(false);
     const [items, setItems] = useState([
         { label: 'High', value: 'High' },
         { label: 'Middle', value: 'Middle' },
@@ -28,8 +28,10 @@ export const TambahKegiatan = ({ navigation }) => {
     const [deskripsi, setDeskripsi] = useState("");
     const [prioritas, setPrioritas] = useState("");
     const [label, setLabel] = useState("");
-    const [asign, setAsign] = useState("");
+    const [asign, setAsign] = useState([]);
 
+    const [listUser, setListUser] = useState([]);
+    const [user, setUser] = useState({})
     const [isLoading, setIsLoading] = useState(false);
 
     const onChangeJudulHandler = (judul) => {
@@ -48,25 +50,74 @@ export const TambahKegiatan = ({ navigation }) => {
         setAsign(asign);
     };
 
+    useEffect(() => {
+        if (listUser.length === 0) {
+            retrieveData()
+                .then(user => {
+                    setUser(user)
+                    getEmployeeForAsign(user.id)
+                        .then(result => {
+                            result.data.map(item => {
+                                setListUser(prevListUser => (
+                                    [
+                                        ...prevListUser,
+                                        {
+                                            label: item.nama,
+                                            value: item.id
+                                        }
+                                    ]
+                                ))
+                            })
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    }, [])
+
     const onSubmitFormHandler = async (event) => {
-        if (!judul.trim() || !deskripsi.trim() || !prioritas.trim() || !label.trim() || !asign.trim()) {
+        if (!judul.trim() || !deskripsi.trim() || !label.trim() || !prioritas.trim() || asign.length === 0 || !tanggal.trim()) {
             alert("invalid");
         } else {
-
             setIsLoading(false);
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            const activity_id = Math.floor(Math.random() * 100)
+
             const data = {
-                "judul": judul,
-                "deskripsi": deskripsi,
-                "prioritas": prioritas,
+                "activity_id": activity_id.toString(),
+                "creator_id": user.id,
+                "name": judul,
+                "description": deskripsi,
+                "date": tanggal,
+                "time": time,
                 "label": label,
-                "asign": asign,
+                "priority": prioritas,
+                "assign": asign
             }
-            addActivity(data).then(result => { console.log(result) }).catch(error => { console.log(error) })
-            console.log("test")
+            addActivity(data)
+                .then(result => {
+                    Alert.alert('Pesan', `${result}`, [
+                        { text: 'OK', onPress: () => navigation.navigate('Home') }
+                    ])
+                })
+                .catch(error => { console.log(error) })
+
         }
-
-
     };
+
+    const retrieveData = async () => {
+        try {
+            const user = await AsyncStorage.getItem('ACCESS_TOKEN')
+            return JSON.parse(user)
+        } catch (error) {
+            return error
+        }
+    }
 
     return (
         <ScrollView>
@@ -86,7 +137,14 @@ export const TambahKegiatan = ({ navigation }) => {
 
                     <Calendar
                         onDayPress={item => {
-                            setTanggal(item.dateString)
+                            const date = new Date()
+                            if (item.day >= date.getDate() && item.month >= date.getMonth() + 1 && item.year >= date.getFullYear()) {
+                                setTanggal(item.dateString)
+                            }
+
+                        }}
+                        markedDates={{
+                            [tanggal]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
                         }}
                         style={{
                             borderWidth: 2,
@@ -98,11 +156,12 @@ export const TambahKegiatan = ({ navigation }) => {
                             backgroundColor: COLORS.white,
                             calendarBackground: COLORS.white,
                             textSectionTitleColor: '#b6c1cd',
-                            selectedDayBackgroundColor: '#00adf5',
-                            selectedDayTextColor: '#ffffff',
-                            todayTextColor: '#00adf5',
+                            selectedDayBackgroundColor: COLORS.primary,
+                            selectedDayTextColor: COLORS.white,
+                            todayTextColor: COLORS.primary,
                             dayTextColor: '#2d4150',
-                            textDisabledColor: 'gray'
+                            textDisabledColor: 'gray',
+                            arrowColor: COLORS.primary
                         }} />
 
                     <Input
@@ -120,11 +179,12 @@ export const TambahKegiatan = ({ navigation }) => {
                     />
 
                     <DropDownPicker
-                        open={open}
-                        value={value}
+                        open={openPriotas}
+                        value={prioritas}
                         items={items}
-                        setOpen={setOpen}
-                        setValue={setValue}
+                        zIndex={5000}
+                        setOpen={setOpenPrioritas}
+                        setValue={setPrioritas}
                         onSelectItem={item => {
                             setPrioritas(item.label)
                         }}
@@ -144,11 +204,25 @@ export const TambahKegiatan = ({ navigation }) => {
                         editable={!isLoading}
                         onChangeText={onChangeLabelHandler}
                     />
-                    <Input
-                        placeholder={'Asign'}
+                    <DropDownPicker
+                        searchable={true}
+                        multiple={true}
+                        min={0}
+                        max={5}
+                        open={openAsign}
                         value={asign}
-                        editable={!isLoading}
-                        onChangeText={onChangeAsignHandler}
+                        items={listUser}
+                        setOpen={setOpenAsign}
+                        setValue={setAsign}
+                        setItems={setListUser}
+                        zIndex={4000}
+                        placeholder='Asign'
+                        listMode='SCROLLVIEW'
+                        style={{ backgroundColor: COLORS.input, borderWidth: 0, borderRadius: 15, paddingHorizontal: 20 }}
+                        dropDownContainerStyle={{ backgroundColor: COLORS.white, borderWidth: 3, borderRadius: 15, borderColor: COLORS.input }}
+                        textStyle={{ color: 'grey' }}
+                        ArrowDownIconComponent={() => <Ionicons name='chevron-down' size={20} color={'grey'} />}
+                        ArrowUpIconComponent={() => <Ionicons name='chevron-up' size={20} color={'grey'} />}
                     />
                     <Button
                         title={'Submit'}

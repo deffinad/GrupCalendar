@@ -2,9 +2,9 @@ import axios from "axios"
 
 const BASE_URL = "http://192.168.1.112:1880/"
 
-export const getAllActivity = async () => {
+export const getAllActivity = async (id) => {
     try {
-        const response = await axios.get(`${BASE_URL}activities`)
+        const response = await axios.get(`${BASE_URL}activities/${id}`)
         return response.data
     } catch (error) {
         return error
@@ -13,7 +13,7 @@ export const getAllActivity = async () => {
 
 export const addActivity = async (data) => {
     try {
-        const response = await axios.post(`${baseUrl}/post`, data);
+        const response = await axios.post(`${BASE_URL}activities`, data);
         if (response.status === 200) {
             return "data berhasil ditambahkan"
         } else {
@@ -35,25 +35,34 @@ export const getAcivityById = async (activity_id) => {
 
 export const login = async (data) => {
     try {
-        const response = await axios.post(`${baseUrl}/login_user`, data)
-        return response
-    } catch (error) {
-        return error
-    }
-}
-
-export const getActivityByLabel = async (label) => {
-    try {
-        const response = await axios.get(`${BASE_URL}activities/${label}`)
+        const response = await axios.post(`${BASE_URL}login`, data)
         return response.data
     } catch (error) {
         return error
     }
 }
-export const profile = async () => {
+
+export const getActivityByLabel = async (label, id) => {
     try {
-        const response = await axios.get(`${baseUrl}/notification`)
-        return response
+        const response = await axios.get(`${BASE_URL}activities/${label}/${id}`)
+        return response.data
+    } catch (error) {
+        return error
+    }
+}
+export const getNotifications = async (id) => {
+    try {
+        const response = await axios.get(`${BASE_URL}notifications/${id}`)
+        return response.data
+    } catch (error) {
+        return error
+    }
+}
+
+export const getEmployeeForAsign = async (id) => {
+    try {
+        const response = await axios.get(`${BASE_URL}employee/asign/${id}`)
+        return response.data
     } catch (error) {
         return error
     }
